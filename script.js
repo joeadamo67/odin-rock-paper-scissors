@@ -59,7 +59,6 @@ let game = ()=>{
     let numberOfTies = 0;
 
 
-    for (let i = 0;i<5;i++){
         let gameResult = (playRound(getComputerChoice(),getUserChoice()));
         console.log(gameResult);
         let temp = gameResult.slice(4,5);
@@ -71,7 +70,15 @@ let game = ()=>{
         } else {
             numberOfTies++;
         }
-    }
+    
 
-    return "You won "+playerGamesWon+" games, lost "+computerGamesWon+" games, and tied "+numberOfTies+" games!";
 }
+
+const buttons = document.querySelectorAll('button');
+buttons.forEach((button) => {
+
+
+    button.addEventListener('click', () => {
+      alert(button.id);
+    });
+  });
