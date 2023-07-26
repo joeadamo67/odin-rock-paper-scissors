@@ -8,7 +8,34 @@ const buttons = document.querySelectorAll('button');
 
 const roundResult = document.querySelector('#roundResult');
 
+const table = document.querySelector("#matchHistory");
 
+
+
+
+function addToMatchHistory() {
+
+    const tableRow = document.createElement('tr');
+
+
+    if (arguments[0] == "W"){
+        let tableDetails = document.createElement('td');
+        tableDetails.innerText = "Player";
+        tableRow.appendChild(tableDetails);
+    } else {
+        let tableDetails = document.createElement('td');
+        tableDetails.innerText = "Computer";
+        tableRow.appendChild(tableDetails);
+    }
+
+    for (let i = 1; i < arguments.length; i++) {
+            let tableDetails = document.createElement('td');
+            tableDetails.innerText = arguments[i];
+            tableRow.appendChild(tableDetails);
+    }
+
+    table.appendChild(tableRow);
+}
 const getComputerChoice = ()=>{
     let choice = Math.floor(Math.random()*3);
     if (choice == 0){
@@ -77,6 +104,8 @@ let checkWinner = (winnerString)=>{
         if (playerGamesWon == 5){
             mainMessage.textContent = "You won "+playerGamesWon+" to "+computerGamesWon
             +" with "+numberOfTies+" ties. Resetting the game!";
+
+            addToMatchHistory(temp, playerGamesWon, computerGamesWon, numberOfTies);
             playerGamesWon = 0;
             computerGamesWon = 0;
             numberOfTies = 0;
@@ -87,6 +116,8 @@ let checkWinner = (winnerString)=>{
         } else if (computerGamesWon ==5){
             mainMessage.textContent = "You lost "+computerGamesWon+" to "+playerGamesWon
             +" with "+numberOfTies+" ties. Resetting the game!";
+            addToMatchHistory(temp, playerGamesWon, computerGamesWon, numberOfTies);
+
             playerGamesWon = 0;
             computerGamesWon = 0;
             numberOfTies = 0;
