@@ -10,10 +10,12 @@ const roundResult = document.querySelector('#roundResult');
 
 const table = document.querySelector("#matchHistory");
 
-
+const tableLable = document.querySelector(".matchHistoryLable");
 
 
 function addToMatchHistory() {
+    table.setAttribute('style', '  visibility: visible;');    
+    tableLable.setAttribute('style', '  visibility: visible;');    
 
     const tableRow = document.createElement('tr');
 
