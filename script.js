@@ -1,6 +1,15 @@
+const computerScore = document.querySelector(".computerScore");
+const playerScore = document.querySelector(".playerScore");
+const ties = document.querySelector(".ties");
+
+const mainMessage = document.querySelector("#mainMessage");
+
+const buttons = document.querySelectorAll('button');
+
+const roundResult = document.querySelector('#roundResult');
 
 
-let getComputerChoice = ()=>{
+const getComputerChoice = ()=>{
     let choice = Math.floor(Math.random()*3);
     if (choice == 0){
         return "rock";
@@ -11,8 +20,7 @@ let getComputerChoice = ()=>{
     }
 }
 
-let playRound = (computerChoice, playerChoice) => {
-    
+const playRound = (computerChoice, playerChoice) => {
     if (playerChoice == "rock"){
         if (computerChoice == "rock"){
             return "You Tied! Rock on Rock!";
@@ -40,45 +48,66 @@ let playRound = (computerChoice, playerChoice) => {
     }
 }
 
-let getUserChoice = ()=>{
-    let invalid = true;
-    while (invalid) {
-    let playerChoice = prompt("Choose Rock, Paper, or Scissors");
-    playerChoice = playerChoice.toLowerCase();
-        if (playerChoice == "rock" || playerChoice == "paper" || playerChoice == "scissors"){
-            return playerChoice;
-        }
-    }
 
+
+let playerGamesWon = 0;
+let computerGamesWon = 0;
+let numberOfTies = 0;
+
+let updateScores = ()=>{
+    playerScore.textContent = playerGamesWon;
+    computerScore.textContent = computerGamesWon;
+    ties.textContent = numberOfTies;
 }
+let checkWinner = (winnerString)=>{
 
-
-let game = ()=>{
-    let playerGamesWon = 0;
-    let computerGamesWon = 0;
-    let numberOfTies = 0;
-
-
-        let gameResult = (playRound(getComputerChoice(),getUserChoice()));
-        console.log(gameResult);
-        let temp = gameResult.slice(4,5);
+        let temp = winnerString.slice(4,5);
 
         if (temp == "W"){
             playerGamesWon++;
+            updateScores();
         } else if (temp == "L"){
             computerGamesWon++;
+            updateScores();
         } else {
             numberOfTies++;
+            updateScores();
         }
-    
+
+        if (playerGamesWon == 5){
+            mainMessage.textContent = "You won "+playerGamesWon+" to "+computerGamesWon
+            +" with "+numberOfTies+" ties. Resetting the game!";
+            playerGamesWon = 0;
+            computerGamesWon = 0;
+            numberOfTies = 0;
+
+            updateScores();
+
+
+        } else if (computerGamesWon ==5){
+            mainMessage.textContent = "You lost "+computerGamesWon+" to "+playerGamesWon
+            +" with "+numberOfTies+" ties. Resetting the game!";
+            playerGamesWon = 0;
+            computerGamesWon = 0;
+            numberOfTies = 0;
+            updateScores();
+
+        }
+        
 
 }
 
-const buttons = document.querySelectorAll('button');
+
+
+
 buttons.forEach((button) => {
 
 
     button.addEventListener('click', () => {
-      alert(button.id);
+        roundResult.textContent = playRound(getComputerChoice(), button.id);
+        checkWinner(roundResult.textContent);
+
+
     });
+
   });
